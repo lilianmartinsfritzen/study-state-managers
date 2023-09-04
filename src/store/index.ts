@@ -4,7 +4,11 @@ const todoSlice = createSlice({
   name: 'todo',
   initialState: ['Fazer café', 'Estudar Redux', 'Estudar Zustand'],
 
-  reducers: {}
+  reducers: {
+    add: (state, action) => {
+      state.push(action.payload.newTodo)
+    }
+  }
 })
 
 export const store = configureStore({
@@ -12,3 +16,5 @@ export const store = configureStore({
     todo: todoSlice.reducer
   }
 })
+
+export const { add } = todoSlice.actions
