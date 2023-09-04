@@ -1,4 +1,5 @@
 import { ChevronDown, MessageCircle, Video } from 'lucide-react'
+import ReactPlayer from 'react-player'
 
 export function Player() {
   return (
@@ -19,9 +20,16 @@ export function Player() {
 
         <main className='relative flex overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900 shadow'>
           <div className='flex-1'>
-            vídeo
+            <div className='w-full bg-zinc-950 aspect-video'>
+              <ReactPlayer
+                width='100%'
+                height='100%'
+                controls
+                url='https://www.youtube.com/watch?v=Jai8w6K_GnY'
+              />
+            </div>
           </div>
-          <aside className='w-80 border-l border-zinc-800 bg-zinc-900 h-[500px]'>
+          <aside className='w-80 border-l border-zinc-800 bg-zinc-900'>
             <div>
               <button className='flex w-full items-center gap-3 bg-zinc-800 p-4'>
                 <div className='flex w-10 h-10 rounded-full items-center justify-center bg-zinc-950 text-xs'>1</div>
