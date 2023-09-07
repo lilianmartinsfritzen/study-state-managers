@@ -2,7 +2,7 @@ import "./styles/global.css"
 
 import { Provider as ReduxProvider } from "react-redux"
 import { store } from "./store"
-import { Player } from "./components/Page/Player"
+import { Player } from "./Page/Player"
 
 export function App() {
   return (
