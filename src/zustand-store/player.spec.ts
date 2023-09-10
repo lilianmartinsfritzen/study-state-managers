@@ -71,4 +71,17 @@ describe('player zustand', () => {
     expect(currentModuleIndex).toEqual(1)
     expect(currentLessonIndex).toEqual(0)
   })
+
+  it('should not update the current module and lesson index if there is no next lesso available', () => {
+    store.setState({ course })
+    const { next } = store.getState()
+
+    store.setState({ currentLessonIndex: 1, currentModuleIndex: 1 })
+    next()
+
+    const { currentModuleIndex, currentLessonIndex } = store.getState()
+
+    expect(currentModuleIndex).toEqual(1)
+    expect(currentLessonIndex).toEqual(1)
+  })
 })
