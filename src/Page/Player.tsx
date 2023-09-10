@@ -4,19 +4,35 @@ import { Video } from '../components/Video'
 import { Module } from '../components/Module'
 import { useAppSelector } from '../store'
 import { useEffect } from 'react'
-import { useCurrentModuleLesson } from '../store/slices/player'
+import { start, useCurrentModuleLesson } from '../store/slices/player'
+import { api } from '../lib/axios'
+import { useDispatch } from 'react-redux'
 
 export function Player() {
+  const dispatch = useDispatch()
   const modules = useAppSelector(state => {
     return state.player.course?.modules
   })
 
   const { currentLesson } = useCurrentModuleLesson()
 
+  const getCourses = async () => {
+    try {
+      const { data } = await api.get('/courses/1')
+      dispatch(start(data))
+    } catch (error) {
+      return null
+    }
+  }
+
+  useEffect(() => {
+    getCourses()
+  }, [])
+
   useEffect(() => {
     if (!currentLesson) return
     document.title = `Assistindo ${currentLesson.title}`
-  }, [])
+  }, [currentLesson])
 
   return (
     <div className='h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center'>
