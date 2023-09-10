@@ -3,11 +3,21 @@ import { Header } from '../components/Header'
 import { Video } from '../components/Video'
 import { Module } from '../components/Module'
 import { useAppSelector } from '../store'
+import { useEffect } from 'react'
+import { useCurrentModuleLesson } from '../store/slices/player'
 
 export function Player() {
   const modules = useAppSelector(state => {
-    return state.player.course.modules
+    return state.player.course?.modules
   })
+
+  const { currentLesson } = useCurrentModuleLesson()
+
+  useEffect(() => {
+    if (!currentLesson) return
+    document.title = `Assistindo ${currentLesson.title}`
+  }, [])
+
   return (
     <div className='h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center'>
       <div className='flex w-[1100px] flex-col gap-6'>
@@ -27,7 +37,7 @@ export function Player() {
           </div>
 
           <aside className='w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800'>
-            {modules.map((module, index) => {
+            {modules && modules.map((module, index) => {
               return (
                 <Module
                   key={module.id}
