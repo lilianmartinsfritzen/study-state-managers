@@ -22,6 +22,7 @@ export interface PlayerState {
 
   play: (moduleAndLessonIndex: [number, number]) => void
   next: () => void
+  load: () => Promise<void>
 }
 
 export const useStore = create<PlayerState>((set, get) => {
@@ -32,8 +33,13 @@ export const useStore = create<PlayerState>((set, get) => {
     isLoading: true,
 
     load: async () => {
+      set({ isLoading: true })
+
       const { data } = await api.get('/courses/1')
-      set({ course: data })
+      set({
+        course: data,
+        isLoading: false
+      })
     },
 
     play: (moduleAndLessonIndex: [number, number]) => {
