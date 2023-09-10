@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { api } from "../lib/axios";
 
 interface Course {
   id: number
@@ -29,6 +30,11 @@ export const useStore = create<PlayerState>((set, get) => {
     currentModuleIndex: 0,
     currentLessonIndex: 0,
     isLoading: true,
+
+    load: async () => {
+      const { data } = await api.get('/courses/1')
+      set({ course: data })
+    },
 
     play: (moduleAndLessonIndex: [number, number]) => {
       const [moduleIndex, lessonIndex] = moduleAndLessonIndex
